@@ -21,7 +21,7 @@ NOTICE
   - 除上述两点外，进一步描述了一种更有效的分配算法（3分）
  ```
 - [x]  
-
+...
 >  最优匹配：
 		优点：大部分分配的尺寸很小时效果比较好；可以避免大块空间被切分
 		缺点：产生外部和无用碎片，释放分区时缓慢。
@@ -38,20 +38,24 @@ NOTICE
    在为进程分配内存空间时，从上次找到的空闲分区开始查找，直至找到一个能满足需求的空闲分区，并从中划出一块来分给作业。
 	优点：该算法能使空闲中的内存分区分布得更加均匀。
    缺点：造成缺乏比较大的空闲分区。
-
+...
 ## 小组思考题
 
 请参考ucore lab2代码，采用`struct pmm_manager` 根据你的`学号 mod 4`的结果值，选择四种（0:最优匹配，1:最差匹配，2:最先匹配，3:buddy systemm）分配算法中的一种或多种，在应用程序层面(可以 用python,ruby,C++，C，LISP等高语言)来实现，给出你的设思路，并给出测试用例。 (spoc)
-
-> //学号为2012011270 mod 4 = 2 最先匹配
->#include <iostream>
+...
+>
+//学号为2012011270 mod 4 = 2 最先匹配
+ 
+ >#include <iostream>
  using namespace std;
-struct page
+
+ struct page
 {
     int pageSize;
     bool isfree;
     page *next;
 };
+
 struct pmm_manager
 {
     page *pmm;
@@ -104,6 +108,7 @@ struct pmm_manager
         m = m -> next;
     }}
 };
+
 int main()
 {
     pmm_manager manage;
@@ -114,6 +119,7 @@ int main()
     n3=manage.alloc(60);
     n4=manage.alloc(80);
     n5=manage.alloc(100);
+
     manage.free_pmm(n1);
     manage.free_pmm(n2);
     manage.free_pmm(n3);
@@ -122,7 +128,7 @@ int main()
     system("pause");
     return 0;
 }
-
+...
 
 如何表示空闲块？ 如何表示空闲块列表？ 
 [(start0, size0),(start1,size1)...]
