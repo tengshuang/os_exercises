@@ -43,19 +43,15 @@ NOTICE
 
 请参考ucore lab2代码，采用`struct pmm_manager` 根据你的`学号 mod 4`的结果值，选择四种（0:最优匹配，1:最差匹配，2:最先匹配，3:buddy systemm）分配算法中的一种或多种，在应用程序层面(可以 用python,ruby,C++，C，LISP等高语言)来实现，给出你的设思路，并给出测试用例。 (spoc)
 
->
-//学号为2012011270 mod 4 = 2 最先匹配
- 
-#include <iostream>
-using namespace std;
-
+> //学号为2012011270 mod 4 = 2 最先匹配
+>#include <iostream>
+ using namespace std;
 struct page
 {
     int pageSize;
     bool isfree;
     page *next;
 };
-
 struct pmm_manager
 {
     page *pmm;
@@ -108,7 +104,6 @@ struct pmm_manager
         m = m -> next;
     }}
 };
-
 int main()
 {
     pmm_manager manage;
@@ -119,7 +114,6 @@ int main()
     n3=manage.alloc(60);
     n4=manage.alloc(80);
     n5=manage.alloc(100);
-
     manage.free_pmm(n1);
     manage.free_pmm(n2);
     manage.free_pmm(n3);
