@@ -22,10 +22,10 @@ int A[NUM][NUM];
 void main (void) {
   int i,j,k;
   for (k = 0; k<COUNT; k++)
-  for (i = 0; i < NUM; i++)
-  for (j = 0; j	 < NUM; j++)
-      A[i][j] = i+j;
-  printf("%d count computing over!\n",i*j*k);
+  	for (i = 0; i < NUM; i++)
+  		for (j = 0; j	 < NUM; j++)
+      			A[i][j] = i+j;
+	 printf("%d count computing over!\n",i*j*k);
 }
 ```
 可以用下的命令来编译和运行此程序：
@@ -146,29 +146,28 @@ Virtual Address 1e6f(0 001_11 10_011 0_1111):
 using namespace std;
 
 int main() {
-    ifstream fin("page.txt");
-    char tmp[10];
+    ifstream fin("page");  
+	ofstream fout("output");
+    char cun[10];
     unsigned int page[4096], disk[4096];
     for (int i = 0; i < 128; i ++) {
-     	fin >> tmp;
-      	fin >> tmp;
+     	fin >> cun >> cun;
        	for (int j = 0; j < 32; j ++)
          	fin >> hex >> page[i * 32 + j];
     }
     fin.close();
-    fin.open("disk.txt");
+    fin.open("disk");
     for (int i = 0; i < 128; i ++) {
-     	fin >> tmp;
-      	fin >> tmp;
+     	fin >> cun >> cun;
        	for (int j = 0; j < 32; j ++)
          	fin >> hex >> disk[i * 32 + j];
     }
     fin.close();
-    fin.open("input.txt");
-    ofstream fout("output.txt");
+    fin.open("input");
     const unsigned int PDBR = 0xd80;
     unsigned int va, pde_idx, pde_ctt, pte_idx, pte_ctt, pa;
-    while (fin >> hex >> va) {
+    while (fin >> hex >> va) 
+	{
  		fout << "Virtual Address " << hex << va << ":\n";
  		pde_idx = (va >> 10);
  		pde_ctt = page[PDBR + pde_idx];
