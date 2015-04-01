@@ -49,38 +49,7 @@ x86保护模式中权限管理无处不在，下面哪些时候要检查访问�
 
 - [x]  
 
-> 学号2012011270，取模得36，加入语句后输出结果如下：
-```
-trapframe at 0x7b5c
-  edi  0x00000001
-  esi  0x00000000
-  ebp  0x00007bc8
-  oesp 0x00007b7c
-  ebx  0x00010094
-  edx  0x000000a1
-  ecx  0x00000000
-  eax  0x000000ff
-  ds   0x----0010
-  es   0x----0010
-  fs   0x----0023
-  gs   0x----0023
-  trap 0x00000006 Invalid Opcode
-  err  0x00000000
-  eip  0x00100070
-  cs   0x----0008
-  flag 0x00000207 CF,PF,IF,IOPL=0
-kernel panic at kern/trap/trap.c:186:
-    unexpected trap in kernel.
-```
-可知这不是一个合法的中断号，触发了如下代码：
-```
-default:
-    // in kernel, it must be a mistake
-    if ((tf->tf_cs & 3) == 0) {
-        print_trapframe(tf);
-        panic("unexpected trap in kernel.\n");
-    }
-```
+> 学号2012011270，取模得36，加入语句后输出结果与不加相同，都可以正常执行100ticks中断。
 
 （3）对于lab2的输出信息，请说明数字的含义
 ```
@@ -97,7 +66,7 @@ e820map:
 
 > 
 
-（4）(spoc)有一台只有页机制的简化80386的32bit计算机，有地址范围位0~256MB的物理内存空间（physical memory），可表示大小为256MB，范围为0xC0000000~0xD0000000的虚拟地址空间（virtual address space）,页大小（page size）为4KB，采用二级页表，一个页目录项（page directory entry ，PDE）大小为4B,一个页表项（page-table entries PTEs）大小为4B，1个页目录表大小为4KB，1个页表大小为4KB。
+（4）(spoc)有一台只有页机制的简化80386的32bit计算机，有地址范围位0~256MB的物理内存空间（physical memory），可表示大小为256MB，范围为0xC0000000~0xD0000000的虚拟地址空间（virtual address space）,页大小（page size）为4KB，采用二级页表，一个（page directory entry ，PDE）大小为4B,一个页表项（page-table entries PTEs）大小为4B，1个页目录表大小为4KB，1个页表大小为4KB。
 ```
 PTE格式（32 bit） :
   PFN19 ... PFN0|NOUSE9 ... NOUSE0|WRITABLE|VALID
@@ -137,29 +106,24 @@ va 0xcd82c07c, pa 0x0c20907c, pde_idx 0x00000336, pde_ctx  0x00037003, pte_idx 0
 > 程序如下：
 
 ```
-#include <fstream>
-#include <iomanip>
-using namespace std;
-
-int main() {
-    ifstream fin("input.txt");
-    ofstream fout("output.txt");
-	unsigned int va, pa, pde_idx, pde_ctx, pte_idx, pte_ctx;
-	while (fin >> hex >> va >> pa) {
-		fout << "va 0x" << setfill('0') << setw(8) << hex << va << ", pa 0x" << setfill('0') << setw(8) << hex << pa << ", ";
-		pde_idx = va >> 22;
-		fout << "pde_idx 0x" << setfill('0') << setw(8) << hex << pde_idx << ", ";
-		pde_ctx = ((pde_idx - 0x300 + 1) << 12) + 0x3;
-		fout << "pde_ctx 0x" << setfill('0') << setw(8) << hex << pde_ctx << ", ";
-		pte_idx = (va >> 12) & 0x3ff;
-		fout << "pte_idx 0x" << setfill('0') << setw(8) << hex << pte_idx << ", ";
-		pte_ctx = (pa & 0xfffff000) + 0x3;
-		fout << "pte_ctx 0x" << setfill('0') << setw(8) << hex << pte_ctx << endl;
-	}
-	fin.close();
-	fout.close();
-	return 0;
-}
+import os,sys
+def deal(va,pa):
+    pde_idx = va>>22
+    pde_ctx = ((((va>>22)-0x300+1)<<12)& 0xfffff000)|0x003
+    pte_idx = (va & (0x3ff000))>>12
+    pte_ctx = ((pa & (0xfffff000)))| 0x003
+    print 'va:',hex(va),
+    print 'pa:',hex(pa),
+    print 'pde_idx:',hex(pde_idx),
+    print 'pde_ctx:',hex(pde_ctx),
+    print 'pte_idx:',hex(pte_idx),
+    print 'pte_ctx:',hex(pte_ctx)
+f=file('data','r')
+line = f.readline()
+while line:
+    t=line.strip().split(' ')
+    deal(int(t[1],16),int(t[3],16))
+    line = f.readline()
 ```
 > 结果如下：
 ```
