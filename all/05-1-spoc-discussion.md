@@ -135,6 +135,6 @@ Time     PID: 0     PID: 1
  10     RUN:yld      READY 
  11     RUNNING       DONE 
 ```
-[答案代码](https://github.com/tengshuang/ucore_lab/blob/master/related_info/lab4/process-concept-homework.py)
+答案被放置到[答案代码](https://github.com/tengshuang/ucore_lab/blob/master/related_info/lab4/process-concept-homework.py)
 ```
 ```
