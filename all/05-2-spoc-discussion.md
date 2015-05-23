@@ -124,3 +124,4 @@ Time     PID: 0     PID: 1        CPU        IOs
  12     RUN:cpu       DONE          1            
  13     RUN:yld       DONE          1            
 ```
+答案被放置在[代码](https://github.com/tengshuang/ucore_lab/blob/master/related_info/lab5/process-cpuio-homework.py)
