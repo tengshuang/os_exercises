@@ -76,8 +76,8 @@ ucore把原先的bootloader去掉，添加了一段用于配合multiboot的启�
 阅读代码，在现有基础上再增加一个用户进程A，并通过增加cprintf函数到ucore代码中，
 能够把个人思考题和上述知识点中的内容展示出来：即在ucore运行过程中通过`cprintf`函数来完整地展现出来进程A相关的动态执行和内部数据/状态变化的细节。(约全面细致约好)
 
-
-代码见[lab5-spoc-discuss](https://github.com/tengshuang/ucore_lab/tree/master/related_info/lab5/lab5-spoc-discuss)
+2012011270 滕爽
+答案代码见[lab5-spoc-discuss](https://github.com/tengshuang/ucore_lab/tree/master/related_info/lab5/lab5-spoc-discuss)
 
 1. 用户进程的启动、运行、就绪、等待、退出等在相应的do_XXX函数内可以看到
 2. 用户进程的管理与简单调度可以在sched.c的schedule函数内看到
